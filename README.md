@@ -5,6 +5,9 @@ docker
 docker-compose
 
 # Run
+```bash
 chmod +x start.sh
 ./start.sh
-open localhost:4200
+```
+wait for starting server  
+open http://localhost:4200
