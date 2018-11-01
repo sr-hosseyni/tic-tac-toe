@@ -1,0 +1,44 @@
+version: '3'
+services:
+    front:
+        image: alexsuch/angular-cli
+        restart: always
+        ports:
+            - "4200:4200"
+#        links:
+#            - api
+        volumes:
+            - ./front:/front
+        command: npm start
+        working_dir: /front
+        container_name: front
+        hostname: tnm-front
+        networks:
+            tournament_net:
+                ipv4_address: 172.28.0.3
+
+    api:
+        image: shincoder/homestead:php7.0
+        restart: always
+        ports:
+            - "8000:8000" # web
+#        links:
+#            - db
+        volumes:
+            - ./api:/api
+        env_file: ./api/.env
+        working_dir: /api
+        command: php artisan serve --host=0.0.0.0
+#        onrun: bash -c "/serve.sh tournament.api /api/public"
+        container_name: api
+        hostname: tnm-api
+        networks:
+            tournament_net:
+                ipv4_address: 172.28.0.2
+
+networks:
+    tournament_net:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.28.0.0/24
