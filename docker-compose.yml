@@ -28,8 +28,7 @@ services:
             - ./api:/api
         env_file: ./api/.env
         working_dir: /api
-        command: php artisan serve --host=0.0.0.0
-#        onrun: bash -c "/serve.sh tournament.api /api/public"
+        command: php -S 0.0.0.0:8000 -t public
         container_name: api
         hostname: tnm-api
         networks:
