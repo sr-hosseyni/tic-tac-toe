@@ -5,38 +5,36 @@ services:
         restart: always
         ports:
             - "4200:4200"
-#        links:
-#            - api
         volumes:
-            - ./front:/front
-        command: npm start
+            - ./frontend:/front
+        command: npm i && npm start
         working_dir: /front
         container_name: front
         hostname: tnm-front
         networks:
-            tournament_net:
+            tictactoe_net:
                 ipv4_address: 172.28.0.3
 
     api:
-        image: shincoder/homestead:php7.0
+        image: php
         restart: always
         ports:
-            - "8000:8000" # web
-#        links:
-#            - db
+            - "8000:8000"
         volumes:
-            - ./api:/api
-        env_file: ./api/.env
+            - ./backend:/api
+        env_file: ./backend/.env
         working_dir: /api
-        command: php -S 0.0.0.0:8000 -t public
+        command: composer install && php -S 0.0.0.0:8000 -t public
         container_name: api
         hostname: tnm-api
         networks:
-            tournament_net:
+            tictactoe_net:
                 ipv4_address: 172.28.0.2
+                aliases:
+                    - api
 
 networks:
-    tournament_net:
+    tictactoe_net:
         ipam:
             driver: default
             config:
