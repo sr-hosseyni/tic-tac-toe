@@ -7,10 +7,10 @@ services:
             - "4200:4200"
         volumes:
             - ./frontend:/front
-        command: npm i && npm start
+        command: npm start
         working_dir: /front
         container_name: front
-        hostname: tnm-front
+        hostname: front
         networks:
             tictactoe_net:
                 ipv4_address: 172.28.0.3
@@ -22,11 +22,11 @@ services:
             - "8000:8000"
         volumes:
             - ./backend:/api
+        command: php -S 0.0.0.0:8000 -t public
         env_file: ./backend/.env
         working_dir: /api
-        command: composer install && php -S 0.0.0.0:8000 -t public
         container_name: api
-        hostname: tnm-api
+        hostname: api
         networks:
             tictactoe_net:
                 ipv4_address: 172.28.0.2
